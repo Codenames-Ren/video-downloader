@@ -39,8 +39,6 @@ export default function Home() {
       ) : (
         <EmptyState />
       )}
-
-      {info && <VideoPreview info={info} onReset={() => setInfo(null)} />}
     </main>
   );
 }

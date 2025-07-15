@@ -15,8 +15,8 @@ export default function VideoPreview({ info, onReset }: Props) {
     <div className="w-full max-w-xl mx-auto space-y-4 bg-white dark:bg-neutral-900 p-4 rounded-2xl shadow-md border">
       <div className="aspect-video relative w-full rounded-lg overflow-hidden">
         <Image
-          src={info.thumbnail}
-          alt={info.title}
+          src={info.thumbnail || "/placeholder.jpeg"}
+          alt={info.title || "Video Thumbnail"}
           fill
           className="object-cover"
         />
