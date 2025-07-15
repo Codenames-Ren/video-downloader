@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { VideoInfo } from "@/types/Video";
 import VideoForm from "@/components/VideoForm";
-// import VideoPreview from "@/components/VideoPreview"
+import VideoPreview from "@/components/VideoPreview";
 import { Alert } from "@/components/ui/alert";
 
 export default function Home() {
@@ -27,7 +27,7 @@ export default function Home() {
       />
 
       {error && <Alert className="mt-4">{error}</Alert>}
-      {/* {info && <VideoPreview info={info} />} */}
+      {info && <VideoPreview info={info} onReset={() => setInfo(null)} />}
     </main>
   );
 }
