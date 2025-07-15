@@ -4,7 +4,8 @@ import { useState } from "react";
 import { VideoInfo } from "@/types/Video";
 import VideoForm from "@/components/VideoForm";
 import VideoPreview from "@/components/VideoPreview";
-import { Alert } from "@/components/ui/alert";
+import ErrorAlert from "@/components/ErrorAlert";
+import EmptyState from "@/components/EmptyState";
 
 export default function Home() {
   const [info, setInfo] = useState<VideoInfo | null>(null);
@@ -26,7 +27,19 @@ export default function Home() {
         }}
       />
 
-      {error && <Alert className="mt-4">{error}</Alert>}
+      {error && <ErrorAlert message={error} />}
+      {info ? (
+        <VideoPreview
+          info={info}
+          onReset={() => {
+            setInfo(null);
+            setError(null);
+          }}
+        />
+      ) : (
+        <EmptyState />
+      )}
+
       {info && <VideoPreview info={info} onReset={() => setInfo(null)} />}
     </main>
   );
