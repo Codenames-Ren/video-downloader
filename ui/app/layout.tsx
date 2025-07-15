@@ -4,9 +4,8 @@ import "./globals.css";
 
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["600"],
-  display: "swap",
   variable: "--font-poppins",
+  weight: ["400", "600", "700"],
 });
 
 const geistSans = Geist({
@@ -30,10 +29,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html lang="en" className={poppins.variable}>
+      <body className="font-sans bg-background text-foreground">
         {children}
       </body>
     </html>
