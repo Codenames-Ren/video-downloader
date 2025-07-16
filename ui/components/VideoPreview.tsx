@@ -16,7 +16,6 @@ export default function VideoPreview({ info, onReset }: Props) {
 
   const handleDownload = async () => {
     setDownloading(true);
-    console.log("INFO URL:", info.url); // ✅ Tambahin log ini
 
     try {
       const res = await fetch("/api/download", {
