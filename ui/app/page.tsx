@@ -30,6 +30,7 @@ export default function Home() {
       {error && <ErrorAlert message={error} />}
       {info ? (
         <VideoPreview
+          key={info.url}
           info={info}
           onReset={() => {
             setInfo(null);
