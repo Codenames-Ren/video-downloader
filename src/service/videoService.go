@@ -30,6 +30,8 @@ func detectPlatform(videoURL string) string {
 		return "facebook"
 	case strings.Contains(host, "instagram.com"):
 		return "instagram"
+	case strings.Contains(host, "x.com"):
+		return "x"
 	case strings.Contains(host, "youtube.com"), strings.Contains(host, "youtu.be"):
 		return "youtube"
 	default:
@@ -48,6 +50,9 @@ func ExtractVideoInfo(videoURL string) (*VideoInfo, error) {
 	
 	case "facebook", "instagram":
 		args = append(args, "--user-agent", "Mozilla/5.0")
+	
+	case "x":
+		args = append(args, "--referer", "https://x.com/")
 	}
 	
 
