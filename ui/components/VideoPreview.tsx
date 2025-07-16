@@ -46,8 +46,8 @@ export default function VideoPreview({ info, onReset }: Props) {
   };
 
   return (
-    <div className="w-full max-w-xl mx-auto space-y-4 bg-white dark:bg-neutral-900 p-4 rounded-2xl shadow-md border">
-      <div className="aspect-video relative w-full rounded-lg overflow-hidden">
+    <div className="bg-blue-600 w-full max-w-xl mx-auto space-y-4 p-4 rounded-xl border-4 border-black shadow-[16px_16px_0px_black] hover:shadow-[6px_6px_0px_black] transition-all duration-300">
+      <div className="aspect-video relative w-full border-2 border-white rounded-xl overflow-hidden">
         <Image
           src={
             info.thumbnail
@@ -60,18 +60,23 @@ export default function VideoPreview({ info, onReset }: Props) {
         />
       </div>
 
-      <h2 className="text-xl font-semibold text-center">{info.title}</h2>
+      <h2 className="text-xl font-semibold text-center text-white text-shadow-[2px_2px_0px_black]">
+        {info.title}
+      </h2>
 
       <div className="flex flex-col sm:flex-row gap-4">
         <Button
           onClick={handleDownload}
           disabled={downloading}
-          className="w-full"
+          className="text-white w-full bg-green-500 hover:bg-green-600 border-green-500 hover:border-green-600 rounded-md shadow-[6px_6px_0px_black] hover:shadow-[1px_1px_0px_black] transition-all duration-200"
         >
           <Download className="w-4 h-4 mr-2" />
           {downloading ? "Downloading..." : "Download"}
         </Button>
-        <Button onClick={onReset} className="w-full">
+        <Button
+          onClick={onReset}
+          className="w-full text-white bg-red-500 hover:bg-red-600 border-red-500 hover:border-red-600 rounded-md shadow-[6px_6px_0px_black] hover:shadow-[1px_1px_0px_black] transition-all duration-200"
+        >
           <RotateCcw className="w-4 h-4 mr-2" />
           Reset
         </Button>
