@@ -11,6 +11,7 @@ import (
 
 type DownloadRequest struct {
 	URL string `json:"url" binding:"required"`
+	Title string `json:"title"`
 }
 
 func GetDownloadInfo(c *gin.Context) {
