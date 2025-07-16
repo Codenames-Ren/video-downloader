@@ -49,6 +49,7 @@ func ExtractVideoInfo(videoURL string) (*VideoInfo, error) {
 	case "facebook", "instagram":
 		args = append(args, "--user-agent", "Mozilla/5.0")
 	}
+	
 
 	args = append(args, videoURL)
 	
@@ -69,6 +70,14 @@ func ExtractVideoInfo(videoURL string) (*VideoInfo, error) {
 	var data map[string]interface{}
 	if err := json.Unmarshal(out.Bytes(), &data); err != nil {
 		return nil, errors.New("gagal parsing JSON yt-dlp")
+	}
+
+	if data["_type"] == "playlist" {
+		return nil, errors.New("URL mengarah ke playlist, bukan video tunggal")
+	}
+
+	if live, ok := data["is_live"].(bool); ok && live {
+		return nil, errors.New("Video livestream tidak bisa di-download")
 	}
 
 	//Get important data

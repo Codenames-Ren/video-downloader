@@ -6,16 +6,13 @@ import (
 	"ren/video-downloader/src/service"
 	"ren/video-downloader/src/utils"
 
+	"ren/video-downloader/src/request"
+
 	"github.com/gin-gonic/gin"
 )
 
-type DownloadRequest struct {
-	URL string `json:"url" binding:"required"`
-	Title string `json:"title"`
-}
-
 func GetDownloadInfo(c *gin.Context) {
-	var req DownloadRequest
+	var req request.DownloadRequest
 
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, response.ErrorResponse("URL tidak valid"))
