@@ -8,7 +8,7 @@ import (
 
 func DownloadRoutes(router *gin.Engine) {
 	api := router.Group("/api")
-	{
+	{	
 		api.POST("/download", controller.DownloadVideo)
 		api.POST("/download-info", controller.GetDownloadInfo)
 	}

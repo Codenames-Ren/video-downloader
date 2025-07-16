@@ -68,9 +68,21 @@ func ExtractVideoInfo(videoURL string) (*VideoInfo, error) {
 
 
 	if err := cmd.Run(); err != nil {
-		return nil, fmt.Errorf("Gagal menjalankan yt-dlp: %v\nstderr: %s", err, stderr.String())
-	}
+		stderrStr := stderr.String()
 
+		switch {
+		case strings.Contains(stderrStr, "HTTP Error 403"):
+			return nil, errors.New("Akses ditolak oleh server (403 Forbidden). Mungkin video ini dibatasi atau tidak dapat diunduh.")
+		case strings.Contains(stderrStr, "fragment") || strings.Contains(stderrStr, "DASH"):
+			return nil, errors.New("Video ini tidak dapat diunduh karena menggunakan format streaming (DASH/HLS).")
+		case strings.Contains(stderrStr, "playlist"):
+			return nil, errors.New("URL mengarah ke playlist. Silakan gunakan URL video tunggal.")
+		case strings.Contains(stderrStr, "Unsupported URL"):
+			return nil, errors.New("URL tidak didukung. Pastikan URL berasal dari platform yang sesuai.")
+		default:
+			return nil, fmt.Errorf("Gagal menjalankan yt-dlp: %v", stderrStr)
+		}
+	}
 
 	var data map[string]interface{}
 	if err := json.Unmarshal(out.Bytes(), &data); err != nil {

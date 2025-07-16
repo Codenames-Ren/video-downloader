@@ -16,7 +16,7 @@ func main() {
 	router.Use(cors.New(cors.Config{
 		AllowOrigins: 		[]string{"http://localhost:3000"}, //Change this in Production!
 		AllowMethods: 		[]string{"GET", "POST"},
-		AllowHeaders: 		[]string{"Origin", "Content-Type"},
+		AllowHeaders: 		[]string{"Origin", "Content-Type", "Accept", "Authorization"},
 		ExposeHeaders: 		[]string{"Content-Length"},
 		AllowCredentials: 	true,
 		MaxAge: 			12* time.Hour,

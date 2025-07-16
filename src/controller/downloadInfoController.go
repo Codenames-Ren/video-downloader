@@ -28,9 +28,8 @@ func GetDownloadInfo(c *gin.Context) {
 
 	info, err := service.ExtractVideoInfo(req.URL)
 	if err != nil {
-		println("Service Error:", err.Error())
 
-		c.JSON(http.StatusInternalServerError, response.ErrorResponse("Gagal mengambil data video"))
+		c.JSON(http.StatusBadRequest, response.ErrorResponse(err.Error()))
 		return
 	}
 

@@ -20,14 +20,16 @@ export default function VideoPreview({ info, onReset }: Props) {
     try {
       const res = await fetch("/api/download", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           url: info.url,
           title: info.title || "video",
         }),
       });
 
-      if (!res.ok) throw new Error("Gagal download video");
+      if (!res.ok) throw new Error("Gagal mengunduh video");
 
       const blob = await res.blob();
       const blobURL = window.URL.createObjectURL(blob);
@@ -36,6 +38,7 @@ export default function VideoPreview({ info, onReset }: Props) {
       a.href = blobURL;
       a.download = `${info.title || "video"}.mp4`;
       a.click();
+
       window.URL.revokeObjectURL(blobURL);
     } catch (err) {
       alert("Download gagal. Coba lagi nanti.");

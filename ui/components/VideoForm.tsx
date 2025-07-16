@@ -30,15 +30,25 @@ export default function VideoForm({ onFetch, onError }: Props) {
         body: JSON.stringify({ url }),
       });
 
-      const data = await res.json();
+      const text = await res.text();
 
-      if (!res.ok) {
-        onError(data.error || "Gagal mengambil info video");
-      } else {
-        onFetch({ ...data, url });
+      try {
+        const data = JSON.parse(text);
+
+        if (!res.ok) {
+          const message =
+            typeof data === "object" && "error" in data
+              ? data.error
+              : "Terjadi kesalahan tak dikenal.";
+          onError(message);
+        } else {
+          onFetch({ ...data, url });
+        }
+      } catch {
+        onError("Respons server tidak valid.");
       }
-    } catch (err) {
-      onError("Terjadi kesalahan saat menghubungi server");
+    } catch {
+      onError("Terjadi kesalahan saat menghubungi server.");
     } finally {
       setLoading(false);
     }
