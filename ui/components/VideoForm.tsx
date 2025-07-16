@@ -3,9 +3,8 @@
 import { useState } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { Alert } from "./ui/alert";
 import { VideoInfo } from "@/types/Video";
-import { Loader, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 interface Props {
   onFetch: (info: VideoInfo) => void;
@@ -36,7 +35,7 @@ export default function VideoForm({ onFetch, onError }: Props) {
       if (!res.ok) {
         onError(data.error || "Gagal mengambil info video");
       } else {
-        onFetch(data);
+        onFetch({ ...data, url });
       }
     } catch (err) {
       onError("Terjadi kesalahan saat menghubungi server");
