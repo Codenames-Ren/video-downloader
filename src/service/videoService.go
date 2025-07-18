@@ -59,7 +59,7 @@ func ExtractVideoInfo(videoURL string) (*VideoInfo, error) {
 	args = append(args, videoURL)
 	
 	//start yt-dlp with json output
-	cmd := exec.Command("/usr/local/bin/yt-dlp", args...)
+	cmd := exec.Command("/yt-dlp-env/bin/yt-dlp", args...)
 
 	var out bytes.Buffer
 	var stderr bytes.Buffer
