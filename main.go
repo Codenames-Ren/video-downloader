@@ -1,6 +1,7 @@
 package main
 
 import (
+	"net/http"
 	"os"
 	"ren/video-downloader/src/routes"
 	"time"
@@ -24,6 +25,8 @@ func main() {
 
 	//Register Routing
 	routes.DownloadRoutes(router)
+
+	router.StaticFS("/", http.Dir("./ui/out"))
 
 	port := os.Getenv("PORT")
 	if port == "" {
