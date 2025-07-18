@@ -1,0 +1,15 @@
+# ui/Dockerfile.frontend
+FROM node:current-alpine3.22
+
+WORKDIR /app
+
+COPY ui/package.json ui/package-lock.json ./
+RUN npm install
+
+COPY ui .
+
+RUN npm run build
+
+EXPOSE 3001
+
+CMD ["npm", "start"]
