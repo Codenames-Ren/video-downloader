@@ -51,6 +51,7 @@ export default function VideoPreview({ info, onReset }: Props) {
     <div className="bg-blue-600 w-full max-w-xl mx-auto space-y-4 p-4 rounded-xl border-4 border-black shadow-[16px_16px_0px_black] hover:shadow-[6px_6px_0px_black] transition-all duration-300">
       <div className="aspect-video relative w-full border-2 border-white rounded-xl overflow-hidden">
         <Image
+          key={`thumbnail-${info.url}`}
           src={
             info.thumbnail
               ? info.thumbnail
