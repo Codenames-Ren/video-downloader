@@ -42,7 +42,9 @@ func detectPlatform(videoURL string) string {
 func ExtractVideoInfo(videoURL string) (*VideoInfo, error) {
 	platform := detectPlatform(videoURL)
 
-	args := []string{"-j", "--no-playlist"}
+	args := []string{
+		"-j", "--no-playlist", "--no-cache-dir", "--no-mtime", "--no-part", "--no-continue",
+	}
 
 	switch platform {
 	case "tiktok":
@@ -108,23 +110,30 @@ func ExtractVideoInfo(videoURL string) (*VideoInfo, error) {
 
 	//search format by extension mp4 middle quality
 	var bestURL string
+	maxHeight := 0
+
 	for _, f := range formats {
 		format := f.(map[string]interface{})
-		if url, ok := format["url"].(string); ok {
-			ext := format["ext"].(string)
-			if ext == "mp4" {
-				formatNote, ok := format["format_note"].(string)
-				if ok && strings.Contains(formatNote, "medium") {
-					bestURL = url
-					break
-				}
-			}
 
-			//forced fallback
-			if bestURL == "" {
-				if url, ok := format["url"].(string); ok {
-					bestURL = url
-				}
+		urlStr, ok1 := format["url"].(string)
+		ext, ok2 := format["ext"].(string)
+		height, hasHeight := format["height"].(float64)
+
+		if ok1 && ok2 && ext == "mp4" && hasHeight {
+			if int(height) > maxHeight {
+				bestURL = urlStr
+				maxHeight = int(height)
+			}
+		}
+	}
+
+	// fallback kalau gak nemu height
+	if bestURL == "" {
+		for _, f := range formats {
+			format := f.(map[string]interface{})
+			if urlStr, ok := format["url"].(string); ok {
+				bestURL = urlStr
+				break
 			}
 		}
 	}
