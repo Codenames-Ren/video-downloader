@@ -1,0 +1,22 @@
+# src/Dockerfile.backend
+
+FROM golang:1.22
+
+WORKDIR /app
+
+COPY src/go.mod src/go.sum ./
+RUN go mod download
+
+COPY src .
+
+# Install yt-dlp & ffmpeg
+RUN apt-get update && apt-get install -y \
+    wget ffmpeg python3 python3-pip && \
+    pip install yt-dlp && \
+    apt-get clean
+
+RUN go build -o main .
+
+EXPOSE 8001
+
+CMD ["./main"]
